@@ -25,6 +25,7 @@ def init_db() -> None:
 @contextmanager
 def get_db_connection() -> Generator[sqlite3.Connection,None,None]:
     conn = sqlite3.connect(settings.db_path)
+    conn.row_factory = sqlite3.Row
     try:
         yield conn
         conn.commit()

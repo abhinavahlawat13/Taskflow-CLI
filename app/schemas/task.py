@@ -7,6 +7,7 @@ class TaskBase(BaseModel):
     title: str = Field(...,min_length=1,max_length=100, description="the title of the task")
     description: Optional[str] = Field(None, max_length=500, description="the description of the task")
     priority: TaskPriority = Field(default=TaskPriority.MEDIUM)
+    status: TaskStatus = TaskStatus.PENDING
 
 class TaskCreate(TaskBase):
     pass

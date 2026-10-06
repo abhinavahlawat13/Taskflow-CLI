@@ -1,9 +1,8 @@
 from app.db.session import get_db_connection
-from typing import Optional
+from typing import Optional,List
 from app.schemas.task import TaskCreate, TaskUpdate, TaskResponse
 import sqlite3
 from app.schemas.common import TaskStatus
-from typing import List
 
 
 class TaskService:
@@ -78,7 +77,7 @@ class TaskService:
             return [TaskResponse.model_validate(row) for row in rows]
 
     @staticmethod
-    def search_tasks(keyword: str) -> list[TaskResponse]:
+    def search_tasks(keyword: str) -> List[TaskResponse]:
         with get_db_connection() as conn:
             cursor = conn.cursor()
             pattern = f"%{keyword}%"
