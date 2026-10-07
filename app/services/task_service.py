@@ -33,7 +33,7 @@ class TaskService:
                 (new_task_id,),
             )
             row = cursor.fetchone()
-            return TaskResponse.model_validate(row)
+            return TaskResponse.model_validate(dict(row))
 
     @staticmethod
     def get_task_by_id(task_id: int) -> Optional[TaskResponse]:
@@ -50,7 +50,7 @@ class TaskService:
             row = cursor.fetchone()
             if not row:
                 return None
-            return TaskResponse.model_validate(row)
+            return TaskResponse.model_validate(dict(row))
     @staticmethod
     def list_tasks(status_filter: Optional[TaskStatus] = None) -> List[TaskResponse]:
         with get_db_connection() as conn:
@@ -74,7 +74,7 @@ class TaskService:
                     """
                 )
             rows = cursor.fetchall()
-            return [TaskResponse.model_validate(row) for row in rows]
+            return [TaskResponse.model_validate(dict(row)) for row in rows]
 
     @staticmethod
     def search_tasks(keyword: str) -> List[TaskResponse]:
@@ -91,7 +91,7 @@ class TaskService:
                 (pattern, pattern),
             )
             rows = cursor.fetchall()
-            return [TaskResponse.model_validate(row) for row in rows]
+            return [TaskResponse.model_validate(dict(row)) for row in rows]
 
     @staticmethod
     def update_task(
@@ -124,7 +124,7 @@ class TaskService:
                 (task_id,),
             )
             row = cursor.fetchone()
-            return TaskResponse.model_validate(row)
+            return TaskResponse.model_validate(dict(row))
 
     @staticmethod
     def delete_task(task_id: int) -> bool:
